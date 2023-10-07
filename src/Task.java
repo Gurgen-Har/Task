@@ -1,11 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
+enum Status{
+    NEW,
+    IN_PROGRESS,
+    DONE
 
+}
 public class Task {
     String taskName;
     List<String> description;
     int id;
-    String status;
+    Status status;
     Task(String taskName, ArrayList<String> description){
         this.taskName = taskName;
         this.description = new ArrayList<>(description);

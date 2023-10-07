@@ -1,12 +1,16 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Manager {
+
+public class InMemoryTaskManager implements TaskManager{
     int id = 0;
     HashMap<Integer, Task> taskContainer = new HashMap<>();
     HashMap<Integer, Subtask> subtaskContainer = new HashMap<>();
     HashMap<Integer, Epic> epicContainer = new HashMap<>();
+    InMemoryHistoryManager history = new InMemoryHistoryManager();
 
-    int getId(){
+   @Override
+   public int getId(){
         return id++;
     }
     public void getAllTasks(){
@@ -26,17 +30,36 @@ public class Manager {
 
     public void deleteAllTasks(){}
 
-    public void getTasksFromId(){}
+    public void getTask(int id){
+       Task task = taskContainer.get(id);
+
+       history.add(task);
+       printTask(task);
+    }
+    public void getSubtask(int id){
+       Subtask subtask = subtaskContainer.get(id);
+
+       history.add(subtask);
+       printSubtask(subtask);
+
+    }
+    public void getEpic(int id){
+       Epic epic = epicContainer.get(id);
+
+       history.add(epic);
+       printEpic(epic);
+
+    }
 
     public void createTasks(Task task){
         task.id = getId();
-        task.status = "NEW";
+        task.status = Status.NEW;
         taskContainer.put(task.id, task);
     }
 
     public int createEpic(Epic epic){
         epic.id = getId();
-        epic.status = "NEW";
+        epic.status = Status.NEW;
         epicContainer.put(epic.id, epic);
 
         return epic.id;
@@ -45,7 +68,7 @@ public class Manager {
     public void createSubtask(Subtask subtask, int epicId){
         subtask.id = getId();
         subtask.epicId = epicId;
-        subtask.status = "NEW";
+        subtask.status = Status.NEW;
         Epic epic = epicContainer.get(epicId);
         epic.subtaskId.add(subtask.id);
 
@@ -60,30 +83,30 @@ public class Manager {
 
         if (!epic.subtaskId.isEmpty()) {
             for(int i : epic.subtaskId) {
-                if(subtaskContainer.get(i).status.equals("NEW")){
+                if(subtaskContainer.get(i).status.name().equals("NEW")){
                     newCount++;
-                } else if (subtaskContainer.get(i).status.equals("DONE")) {
+                } else if (subtaskContainer.get(i).status.name().equals("DONE")) {
                     doneCount++;
                 }
             }
         }
         if(newCount == epic.subtaskId.size()){
-            epic.status = "NEW";
+            epic.status = Status.NEW;
         } else if (doneCount == epic.subtaskId.size()) {
-            epic.status = "DONE";
+            epic.status = Status.DONE;
         } else {
-            epic.status = "IN PROGRESS";
+            epic.status = Status.IN_PROGRESS;
         }
         epicContainer.put(epic.id, epic);
 
 
     }
-    public void updateTask(int id, String status){
+    public void updateTask(int id, Status status){
         Task task =  taskContainer.get(id);
         task.status = status;
         taskContainer.put(task.id, task);
     }
-    public void updateSubtask(int id, String status){
+    public void updateSubtask(int id, Status status){
         Subtask subtask =  subtaskContainer.get(id);
         subtask.status = status;
         taskContainer.put(subtask.id, subtask);
@@ -91,14 +114,14 @@ public class Manager {
 
     public void deleteFromId(){}
 
-    private void printTask(Task task){
+    public void printTask(Task task){
         System.out.println(task.id + ". " + task.taskName + ":");
         System.out.println(task.description);
         System.out.println(task.status);
         System.out.println();
 
     }
-    private void printEpic(Epic epic){
+    public void printEpic(Epic epic){
         System.out.println(epic.id + ". " + epic.taskName + ":");
         System.out.println(epic.description);
         System.out.println(epic.status);
@@ -113,7 +136,7 @@ public class Manager {
         }
 
     }
-    private void printSubtask(Subtask subtask){
+    public void printSubtask(Subtask subtask){
 
         System.out.println(subtask.id + ". "+subtask.taskName + ":");
         System.out.println(subtask.description);
