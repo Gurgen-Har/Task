@@ -1,7 +1,5 @@
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -11,16 +9,18 @@ public class InMemoryHistoryManager implements HistoryManager {
     private int size = 0;
 
     private HashMap<Integer, Node<Task>> counter = new HashMap<>();
-    private  List<Task> history = new ArrayList<>(10);
+    private List<Task> history = new ArrayList<>(10);
+
     @Override
     public void add(Task task) {
-        if (counter.containsKey(task.id)){
+        if (counter.containsKey(task.id)) {
             removeNode(counter.get(task.id));
-        } else if (counter) {
-
+            linkLast(task);
+            counter.put(task.id, tail);
+        } else {
+            linkLast(task);
+            counter.put(task.id, tail);
         }
-
-
     }
 
     @Override
@@ -30,8 +30,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
+        getTasks();
         return history;
     }
+
     //добавление в конец
     public void linkLast(Task task) {
         final Node<Task> oldTail = tail;
@@ -44,41 +46,45 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         size++;
     }
+
     //из св.списка  список
     public void getTasks() {
         Node<Task> tmp;
         tmp = head;
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             history.add(tmp.data);
-            tmp = head.next;
+            tmp = tmp.next;
         }
     }
+
     //удаление узла
     public void removeNode(Node<Task> node) {
-        if (node.prev.data != null && node.next.data == null) {
+        if (node.prev != null && node.next == null) {
             node.prev.next = null;
             tail = node.prev;
             node = null;
+            size--;
 
 
-        } else if (node.prev.data == null && node.next.data != null ) {
+        } else if (node.prev == null && node.next != null) {
             node.next.prev = null;
             head = node.next;
             node = null;
+            size--;
 
-        } else if (node.prev.data != null && node.next.data != null) {
+        } else if (node.prev != null && node.next != null) {
             node.prev.next = node.next;
             node.next.prev = node.prev;
             node = null;
-
+            size--;
         }
 
     }
-
 
 
 
 }
+
 class Node <T> {
     public T data;
     public Node<T> next;

@@ -1,8 +1,7 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
     int id = 0;
     HashMap<Integer, Task> taskContainer = new HashMap<>();
     HashMap<Integer, Subtask> subtaskContainer = new HashMap<>();

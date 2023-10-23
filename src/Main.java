@@ -7,7 +7,7 @@ public class Main {
         ArrayList<Task> history;
         description.add("Покупка");
         description.add("Распаковка");
-      //  Task task = new Task("Уборка", description);
+
 
         Epic epic = new Epic("Домашние дела", description);
         int epicId = inMemoryTaskManager.createEpic(epic);
@@ -24,13 +24,38 @@ public class Main {
         description.add("Еда");
         Subtask subtask1 = new Subtask("Распаковка", description);
 
+        description.clear();
+        description.add("Покуп");
+        description.add("Рас");
         //manager.createTasks(task);
-
-
         inMemoryTaskManager.createSubtask(subtask1, epicId);
+
+        Task task = new Task("Убка", description);
+        inMemoryTaskManager.createTasks(task);
+
+        description.clear();
+        description.add("Покупra");
+        description.add("Расtor");
+        Task task1 = new Task("борка", description);
+        inMemoryTaskManager.createTasks(task1);
+
+
+
         //inMemoryTaskManager.getAllTasks();
+        inMemoryTaskManager.getTask(3);
+        inMemoryTaskManager.getTask(4);
+
         inMemoryTaskManager.getEpic(0);
-        inMemoryTaskManager.getSubtask(1);
+        inMemoryTaskManager.getTask(3);
+
+        inMemoryTaskManager.getEpic(0);
+
+        //inMemoryTaskManager.getSubtask(1);
+        history = new ArrayList<>(inMemoryTaskManager.history.getHistory());
+        for(int i = 0; i < history.size(); i++){
+            System.out.println(history.get(i).id);
+        }
+
 
 
     }
