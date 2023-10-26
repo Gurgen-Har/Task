@@ -143,6 +143,9 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println();
 
     }
+    static int getEpicId(Subtask subtask){
+        return subtask.epicId;
+    }
 
     
 }

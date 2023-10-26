@@ -3,40 +3,32 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
-        ArrayList<String> description = new ArrayList<>();
+
         ArrayList<Task> history;
-        description.add("Покупка");
-        description.add("Распаковка");
 
 
-        Epic epic = new Epic("Домашние дела", description);
+
+
+        Epic epic = new Epic("Домашние дела", "Покупка");
         int epicId = inMemoryTaskManager.createEpic(epic);
-        description.clear();
-        description.add("Еда");
-        description.add("швабра");
-        description.add("кастрюля ");
 
-        Subtask subtask = new Subtask("Покупка",description);
+
+
+        Subtask subtask = new Subtask("Покупка","Еда");
         inMemoryTaskManager.createSubtask(subtask, epicId);
 
-        description.clear();
-        description.add("Коробки");
-        description.add("Еда");
-        Subtask subtask1 = new Subtask("Распаковка", description);
 
-        description.clear();
-        description.add("Покуп");
-        description.add("Рас");
+        Subtask subtask1 = new Subtask("Распаковка", "Коробки");
+
+
         //manager.createTasks(task);
         inMemoryTaskManager.createSubtask(subtask1, epicId);
 
-        Task task = new Task("Убка", description);
+        Task task = new Task("Убка", "Покупка");
         inMemoryTaskManager.createTasks(task);
 
-        description.clear();
-        description.add("Покупra");
-        description.add("Расtor");
-        Task task1 = new Task("борка", description);
+
+        Task task1 = new Task("борка", "Еда");
         inMemoryTaskManager.createTasks(task1);
 
 
@@ -55,7 +47,8 @@ public class Main {
         for(int i = 0; i < history.size(); i++){
             System.out.println(history.get(i).id);
         }
-        System.out.println(task1.getClass().getSimpleName().toUpperCase());
+
+
 
 
 

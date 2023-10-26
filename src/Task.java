@@ -8,12 +8,13 @@ enum Status{
 }
 public class Task {
     String taskName;
-    List<String> description;
+    String description;
     int id;
     Status status;
-    Task(String taskName, ArrayList<String> description){
+    Task(String taskName, String description){
         this.taskName = taskName;
-        this.description = new ArrayList<>(description);
+        this.description = description;
+
         //this.description = description;
 
     }
