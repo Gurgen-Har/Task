@@ -55,6 +55,7 @@ public class Main {
         for(int i = 0; i < history.size(); i++){
             System.out.println(history.get(i).id);
         }
+        System.out.println(task1.getClass().getSimpleName().toUpperCase());
 
 
 
