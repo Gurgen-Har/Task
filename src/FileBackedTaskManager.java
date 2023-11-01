@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,17 +15,30 @@ enum types{
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     String fileName = "C:\\Users\\Gurgen\\IdeaProjects\\Task\\src\\Data.csv";
-
-    public FileBackedTaskManager(){
-
+    Paths path;
+    public FileBackedTaskManager(Paths path){
+        this.path = path;
     }
     @Override
     public void createTasks(Task task){
         super.createTasks(task);
         save();
     }
+    //нужно перезаписывать состояние менеджера при каждом вызове
+    public void save() {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < id; i++) {
+            if (taskContainer.containsKey(i)) {
+                list.add(toString(taskContainer.get(i)));
+            } else if (subtaskContainer.containsKey(i)) {
+                list.add(toString(subtaskContainer.get(i)));
+            } else if (epicContainer.containsKey(i)) {
+                list.add(toString(epicContainer.get(i)));
+            }
+        }
 
-    public void save(){
+
+
 
     }
 
@@ -71,8 +88,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     
     public static  List<Integer> FromString(String value){
 
-
-        return null;
+        List<Integer> list = new ArrayList<>();
+        String[] str = value.split(",");
+        for (String part : str) {
+            list.add(Integer.parseInt(part));
+        }
+        return list;
     }
 
 
