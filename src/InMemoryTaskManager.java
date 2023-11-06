@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 
 public class InMemoryTaskManager implements TaskManager {
-    int id = 0;
+    int id = 1;
     HashMap<Integer, Task> taskContainer = new HashMap<>();
     HashMap<Integer, Subtask> subtaskContainer = new HashMap<>();
     HashMap<Integer, Epic> epicContainer = new HashMap<>();
@@ -51,13 +51,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public void createTasks(Task task){
-        task.id = getId();
+       if(task.id == 0){
+           task.id = getId();
+       }
+       // task.id = getId();
         task.status = Status.NEW;
         taskContainer.put(task.id, task);
     }
 
     public int createEpic(Epic epic){
-        epic.id = getId();
+        if(epic.id == 0){
+            epic.id = getId();
+        }
         epic.status = Status.NEW;
         epicContainer.put(epic.id, epic);
 
@@ -65,7 +70,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public void createSubtask(Subtask subtask, int epicId){
-        subtask.id = getId();
+        if(subtask.id == 0){
+            subtask.id = getId();
+        }
         subtask.epicId = epicId;
         subtask.status = Status.NEW;
         Epic epic = epicContainer.get(epicId);

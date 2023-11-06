@@ -16,13 +16,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
    // String fileName = "C:\\Users\\Gurgen\\IdeaProjects\\Task\\src\\Data.csv";
     Path path;
     public FileBackedTaskManager(Path path){
+        super();
         this.path = path;
+
     }
     @Override
     public void createTasks(Task task){
         super.createTasks(task);
         save();
     }
+
+
     //нужно перезаписывать состояние менеджера при каждом вызове
     public void save() {
         List<String> tasks = new ArrayList<>();
@@ -47,6 +51,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 writer.write(str);
                 writer.write("\n");
             }
+
+            writer.write(getId() - 1);
             writer.write("\n");
             writer.write(historyManager);
 
@@ -130,14 +136,31 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
         return list;
     }
-    public static void loadFromFile(Path path) throws IOException {
+    public static FileBackedTaskManager loadFromFile(Path path) throws IOException {
         String[] str = Files.readString(path).split("\n");
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(path);
 
         for (String string : str) {
-            fromString(string)
+
+            if(string.equals("")) {
+                break;
+            } else if (fileBackedTaskManager.fromString(string).getClass().getSimpleName().equalsIgnoreCase(String.valueOf(types.TASK))) {
+                fileBackedTaskManager.taskContainer.put(from)
+            } else if (fileBackedTaskManager.fromString(string).getClass().getSimpleName().equalsIgnoreCase(String.valueOf(types.SUBTASK))) {
+
+            } else if (fileBackedTaskManager.fromString(string).getClass().getSimpleName().equalsIgnoreCase(String.valueOf(types.EPIC))) {
+
+            }
         }
 
     }
 
 
 }
+/* Переписать так fromString ,loadFromFile так чтобы задача создавалась в статик методе
+* Переписать создание задач так чтоб эпик и сабтаск сами знали кто кому пренадлежит
+* Переопределить все методы изменения задач и проверить их работу
+*
+*
+*
+*  */
