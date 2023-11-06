@@ -49,6 +49,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     //из св.списка  список
     public void getTasks() {
+        history.clear();
         Node<Task> tmp;
         tmp = head;
         for (int i = 0; i < size; i++) {

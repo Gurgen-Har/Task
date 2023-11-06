@@ -1,14 +1,13 @@
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
         ArrayList<Task> history;
-
-
-
-
         Epic epic = new Epic("Домашние дела", "Покупка");
         int epicId = inMemoryTaskManager.createEpic(epic);
 
@@ -47,6 +46,11 @@ public class Main {
         for(int i = 0; i < history.size(); i++){
             System.out.println(history.get(i).id);
         }
+        String fileName = "Data.csv";
+        Path path = Path.of(fileName);
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(path);
+        fileBackedTaskManager.save();
+        FileBackedTaskManager.loadFromFile(path);
 
 
 
