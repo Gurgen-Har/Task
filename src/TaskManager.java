@@ -9,7 +9,7 @@ interface TaskManager {
     void getEpic(int id);
 
     void createTasks(Task task);
-    int createEpic(Epic epic);
+    void createEpic(Epic epic);
     void createSubtask(Subtask subtask, int epicId);
     void updateEpic(Epic epic);
     void updateTask(int id, Status status);

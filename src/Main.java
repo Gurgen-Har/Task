@@ -9,19 +9,19 @@ public class Main {
 
         ArrayList<Task> history;
         Epic epic = new Epic("Домашние дела", "Покупка");
-        int epicId = inMemoryTaskManager.createEpic(epic);
+        //int epicId = inMemoryTaskManager.createEpic(epic);
 
 
 
-        Subtask subtask = new Subtask("Покупка","Еда");
-        inMemoryTaskManager.createSubtask(subtask, epicId);
+       // Subtask subtask = new Subtask("Покупка","Еда");
+       // inMemoryTaskManager.createSubtask(subtask, epicId);
 
 
-        Subtask subtask1 = new Subtask("Распаковка", "Коробки");
+        //Subtask subtask1 = new Subtask("Распаковка", "Коробки");
 
 
         //manager.createTasks(task);
-        inMemoryTaskManager.createSubtask(subtask1, epicId);
+        //inMemoryTaskManager.createSubtask(subtask1, epicId);
 
         Task task = new Task("Убка", "Покупка");
         inMemoryTaskManager.createTasks(task);

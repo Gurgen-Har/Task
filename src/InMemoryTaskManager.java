@@ -55,18 +55,22 @@ public class InMemoryTaskManager implements TaskManager {
            task.id = getId();
        }
        // task.id = getId();
-        task.status = Status.NEW;
+        if (task.status == null) {
+            task.status = Status.NEW;
+        }
         taskContainer.put(task.id, task);
     }
 
-    public int createEpic(Epic epic){
+    public void createEpic(Epic epic){
         if(epic.id == 0){
             epic.id = getId();
         }
-        epic.status = Status.NEW;
+        if (epic.status == null) {
+            epic.status = Status.NEW;
+        }
+
         epicContainer.put(epic.id, epic);
 
-        return epic.id;
     }
 
     public void createSubtask(Subtask subtask, int epicId){
@@ -74,9 +78,11 @@ public class InMemoryTaskManager implements TaskManager {
             subtask.id = getId();
         }
         subtask.epicId = epicId;
-        subtask.status = Status.NEW;
+        if (subtask.status == null) {
+            subtask.status = Status.NEW;
+        }
         Epic epic = epicContainer.get(epicId);
-        epic.subtaskId.add(subtask.id);
+        epic.subtaskId.add(subtask.getSubtaskId());
 
         subtaskContainer.put(subtask.id, subtask);
         updateEpic(epic);
