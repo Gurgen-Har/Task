@@ -19,4 +19,16 @@ public class Task {
 
     }
 
+    Task(String taskName, String description, int id, Status status){
+        this.taskName = taskName;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+        //this.description = description;
+
+    }
+    Status getStatus(){
+        return status;
+    }
+
 }

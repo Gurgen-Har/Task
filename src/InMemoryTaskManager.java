@@ -121,7 +121,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(int id, Status status){
         Subtask subtask =  subtaskContainer.get(id);
         subtask.status = status;
-        taskContainer.put(subtask.id, subtask);
+        subtaskContainer.put(subtask.id, subtask);
+        updateEpic(epicContainer.get(subtask.epicId));
     }
 
     public void deleteFromId(){}
